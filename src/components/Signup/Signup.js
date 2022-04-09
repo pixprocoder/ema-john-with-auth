@@ -1,9 +1,12 @@
 import React from "react";
+import "./Signup.css";
 
 const Signup = () => {
   return (
-    <div>
-      <h1>This is signup</h1>
+    <div className="signup-container">
+      <div>
+        <h1>Login</h1>
+      </div>
     </div>
   );
 };
