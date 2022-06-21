@@ -3,7 +3,21 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../Firebase.init";
 
 const Shipment = () => {
-  const [user] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
+
+  if (loading) {
+    return <loading />;
+  }
+
+  const handleShipment = (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const address = e.target.address.value;
+    const phone = e.target.phone.value;
+    console.log(name, email, address, phone);
+  };
+
   return (
     <div>
       <h1 className="text-center text-5xl text-blue-500  my-9">
@@ -12,20 +26,21 @@ const Shipment = () => {
 
       <div className="flex items-center justify-center">
         <div className="mx-auto w-full max-w-[550px]">
-          <form>
+          <form onSubmit={handleShipment}>
             <div className="mb-5">
               <label
                 for="name"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
-                Full Name
+                Your name
               </label>
               <input
                 type="text"
+                required
                 name="name"
                 id="name"
                 placeholder="Full Name"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium outline-none "
               />
             </div>
             <div className="mb-5">
@@ -44,27 +59,29 @@ const Shipment = () => {
             </div>
             <div className="mb-5">
               <label
-                for="subject"
+                for="address"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
                 Address
               </label>
               <input
+                required
                 type="text"
-                name="subject"
-                id="subject"
+                name="address"
+                id="address"
                 placeholder="Enter your Address"
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
               />
             </div>
             <div className="mb-5">
               <label
-                for="subject"
+                for="phone"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
                 Phone
               </label>
               <input
+                required
                 type="text"
                 name="phone"
                 id="phone"
