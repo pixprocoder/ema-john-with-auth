@@ -5,9 +5,10 @@
   align-items: center;
   width: 500px;
   height: 600px;
-  border: 1px solid #95a0a7;
+  /* border: 1px solid #95a0a7; */
   box-sizing: border-box;
   border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 .form-title {
   text-align: center;
