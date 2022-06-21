@@ -49,6 +49,7 @@ const Signup = () => {
       return;
     }
     await createUserWithEmailAndPassword(email, password);
+
     await updateProfile({ displayName: name });
   };
   return (

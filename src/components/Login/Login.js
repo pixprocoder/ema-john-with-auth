@@ -1,6 +1,9 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import {
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
 
 import "./Login.css";
 import auth from "../../Firebase.init";
@@ -8,27 +11,32 @@ import Loading from "../Loading/Loading";
 
 const Login = () => {
   const navigate = useNavigate();
-
+  const location = useLocation();
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
+  const [signInWithGoogle, googleUser, googleLoading, googleError] =
+    useSignInWithGoogle(auth);
+  const from = location.state?.from?.pathname || "/";
 
-  if (user) {
-    navigate("/shop");
-    console.log("login user", user);
+  if (user || googleUser) {
+    navigate(from, { replace: true });
   }
-  if (loading) {
+  if (loading || googleLoading) {
     return <Loading />;
   }
   let errorMessage;
-  if (error) {
-    errorMessage = <p style={{ color: "red" }}>{error.message}</p>;
+  if (error || googleError) {
+    errorMessage = (
+      <p style={{ color: "red" }}>
+        {error.message} || {googleError.message}
+      </p>
+    );
   }
 
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password);
     signInWithEmailAndPassword(email, password);
   };
 
@@ -64,7 +72,9 @@ const Login = () => {
           <p className="or">OR</p>
           <div className="or-line"></div>
         </div>
-        <button className="google-btn">Continue with google</button>
+        <button onClick={() => signInWithGoogle()} className="google-btn">
+          Continue with google
+        </button>
       </div>
     </div>
   );
