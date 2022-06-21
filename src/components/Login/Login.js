@@ -29,6 +29,12 @@ const Login = () => {
             Create an account
           </Link>
         </p>
+        <div className="or-container">
+          <div className="or-line"></div>
+          <p className="or">OR</p>
+          <div className="or-line"></div>
+        </div>
+        <button className="google-btn">Continue with google</button>
       </div>
     </div>
   );
