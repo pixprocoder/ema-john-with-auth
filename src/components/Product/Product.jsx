@@ -5,7 +5,6 @@ import books from "../../images/newBooks.png";
 import "./Product.css";
 
 const Product = ({ product, handleAddToCart }) => {
-  // const {product, handleAddToCart} = props;
   const { name, img, seller, price, ratings } = product;
 
   return (

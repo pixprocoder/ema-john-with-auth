@@ -1,13 +1,4 @@
-.header {
-  height: 80px;
-  background-color: #1c2b35;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 140px;
-  padding-right: 140px;
-}
-
+/* 
 .header a {
   color: #ffffff;
   text-decoration: none;
@@ -25,9 +16,4 @@
   font-size: 17px;
   margin-left: 36px;
   transition: ease-in-out 0.2s;
-}
-.header span:hover {
-  color: orange;
-  cursor: pointer;
-  border-color: orangered;
-}
+} */
