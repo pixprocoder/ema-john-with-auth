@@ -1,7 +1,7 @@
 // use local storage to manage cart data
 const addToDb = (id) => {
   let shoppingCart = {};
-
+  console.log(shoppingCart);
   //Get the shopping cart from local storage
   const storedCart = localStorage.getItem("shopping-cart");
   if (storedCart) {
@@ -44,4 +44,16 @@ const deleteShoppingCart = () => {
   localStorage.removeItem("shopping-cart");
 };
 
-export { addToDb, getStoredCart, removeFromDb, deleteShoppingCart };
+const getProductTotal = (products) => {
+  const reducer = (previous, current) => previous + current.price;
+  const sum = products.reduce(reducer, 0);
+  return sum;
+};
+
+export {
+  addToDb,
+  getStoredCart,
+  removeFromDb,
+  deleteShoppingCart,
+  getProductTotal as totalSum,
+};

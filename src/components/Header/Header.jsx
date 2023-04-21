@@ -8,9 +8,10 @@ import "./Header.css";
 
 const Header = () => {
   const [user] = useAuthState(auth);
+
   return (
-    <header>
-      <nav className="flex justify-between bg-gray-900 items-center py-4 ">
+    <header className=" bg-gray-900 mb-4">
+      <nav className="flex justify-between max-w-screen-xl mx-auto items-center py-4 ">
         <Link to="/">
           <img src={logo} alt="" />
         </Link>
