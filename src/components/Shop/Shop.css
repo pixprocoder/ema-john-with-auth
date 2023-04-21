@@ -11,12 +11,12 @@
 
 .review-order-btn {
   background-color: orange;
+  transition: all 0.3s;
   color: white;
+  border: 1px solid orange;
   padding: 5px 9px;
   border-radius: 5px;
-  border: 1px solid orange;
   font-size: 1rem;
-  transition: all 0.3s;
 }
 .review-order-btn:hover {
   cursor: pointer;
