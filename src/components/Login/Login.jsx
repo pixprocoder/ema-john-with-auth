@@ -1,43 +1,34 @@
-import React from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import {
-  useSignInWithEmailAndPassword,
-  useSignInWithGoogle,
-} from "react-firebase-hooks/auth";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 
 import "./Login.css";
-import auth from "../../Firebase.init";
-import Loading from "../Loading/Loading";
+import { userContext } from "../../context/AuthContext";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [signInWithEmailAndPassword, user, loading, error] =
-    useSignInWithEmailAndPassword(auth);
-  const [signInWithGoogle, googleUser, googleLoading, googleError] =
-    useSignInWithGoogle(auth);
-  const from = location.state?.from?.pathname || "/";
+  const { signIn, signInWithGoogle } = useContext(userContext);
 
-  if (user || googleUser) {
-    navigate(from, { replace: true });
-  }
-  if (loading || googleLoading) {
-    return <Loading />;
-  }
   let errorMessage;
-  if (error || googleError) {
-    errorMessage = (
-      <p style={{ color: "red" }}>
-        {error.message} || {googleError.message}
-      </p>
-    );
-  }
 
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    signInWithEmailAndPassword(email, password);
+    signIn(email, password)
+      .then((result) => {
+        e.target.reset();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const handleSignInWithGoogle = () => {
+    signInWithGoogle()
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -72,7 +63,7 @@ const Login = () => {
           <p className="or">OR</p>
           <div className="or-line"></div>
         </div>
-        <button onClick={() => signInWithGoogle()} className="google-btn">
+        <button onClick={handleSignInWithGoogle} className="google-btn">
           Continue with google
         </button>
       </div>

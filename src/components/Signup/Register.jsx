@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   useCreateUserWithEmailAndPassword,
@@ -7,40 +7,28 @@ import {
 import auth from "../../Firebase.init";
 import "./Signup.css";
 import Loading from "../Loading/Loading";
+import { userContext } from "../../context/AuthContext";
 
-const Signup = () => {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+const Register = () => {
+  const { user, createUser, signInWithGoogle } = useContext(userContext);
+  // Error message state
   const [error, setError] = useState("");
+
   const navigate = useNavigate();
   const [updateProfile, updating] = useUpdateProfile(auth);
-  const [createUserWithEmailAndPassword, user, loading] =
-    useCreateUserWithEmailAndPassword(auth);
 
   if (user) {
     navigate("/shop");
     console.log(user);
   }
-  if (loading || updating) {
-    return <Loading />;
-  }
-  const handleEmailBlur = (e) => {
-    setEmail(e.target.value);
-  };
-  const handleNameBlur = (e) => {
-    setName(e.target.value);
-  };
-  const handlePasswordBlur = (e) => {
-    setPassword(e.target.value);
-  };
-  const handleConfirmPasswordBlur = (e) => {
-    setConfirmPassword(e.target.value);
-  };
 
-  const handleSignUp = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    const confirmPassword = e.target.confirmPassword.value;
+
     if (password !== confirmPassword) {
       setError("Sorry your password did not match");
       return;
@@ -48,41 +36,44 @@ const Signup = () => {
       setError("your password must grater then 8 character");
       return;
     }
-    await createUserWithEmailAndPassword(email, password);
+    createUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     await updateProfile({ displayName: name });
+  };
+  const handleSignInWithGoogle = () => {
+    signInWithGoogle()
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <div className="signup-container">
       <div>
-        <h1 className="form-title">Signup</h1>
-        <form onSubmit={handleSignUp}>
+        <h1 className="form-title">Please Register</h1>
+        <form onSubmit={handleRegister}>
           <div className="input-group">
             <label htmlFor="Email">Name:</label>
-            <input
-              onBlur={handleNameBlur}
-              type="text"
-              name="name"
-              id="name"
-              placeholder=" Name"
-            />
+            <input type="text" name="name" id="name" placeholder=" Name" />
           </div>
           <div className="input-group">
             <label htmlFor="Email">Email:</label>
-            <input
-              onBlur={handleEmailBlur}
-              type="email"
-              name="email"
-              id="email"
-              placeholder=" Email"
-            />
+            <input type="email" name="email" id="email" placeholder=" Email" />
           </div>
           <div className="input-group">
             <label htmlFor="Password">Password</label>
             <input
-              onBlur={handlePasswordBlur}
               type="password"
-              name="Password"
+              name="password"
               id="password"
               placeholder=" Password"
             />
@@ -90,16 +81,15 @@ const Signup = () => {
           <div className="input-group">
             <label htmlFor="Password">Confirm Password</label>
             <input
-              onBlur={handleConfirmPasswordBlur}
               type="password"
-              name="password"
+              name="confirmPassword"
               id="confirmPassword"
               required
               placeholder="Confirm password"
             />
           </div>
           <p style={{ color: "red" }}>{error}</p>
-          <input className="form-submit" type="submit" value="Sign up" />
+          <input className="form-submit" type="submit" value="Register" />
         </form>
         <p>
           Already have an account?{" "}
@@ -112,10 +102,12 @@ const Signup = () => {
           <p className="or">OR</p>
           <div className="or-line"></div>
         </div>
-        <button className="google-btn">Continue with google</button>
+        <button onClick={handleSignInWithGoogle} className="google-btn">
+          Continue with google
+        </button>
       </div>
     </div>
   );
 };
 
-export default Signup;
+export default Register;
