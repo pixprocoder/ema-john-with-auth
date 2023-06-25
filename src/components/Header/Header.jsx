@@ -1,13 +1,15 @@
 import { signOut } from "firebase/auth";
-import React from "react";
+import React,  from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
 import auth from "../../Firebase.init";
 import logo from "../../images/Logo.svg";
 import "./Header.css";
 
+
 const Header = () => {
   const [user] = useAuthState(auth);
+
 
   return (
     <header className=" bg-gray-900 mb-4">
