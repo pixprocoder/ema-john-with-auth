@@ -1,1 +1,14 @@
-## This is an E-commerce site. everyone can see this repo
+## technologies
+
+> React
+> vite
+> tailwind css
+> React-router-dom
+
+## Authentication
+
+> Firebase
+
+## CSS Framework
+
+> daisyUI
