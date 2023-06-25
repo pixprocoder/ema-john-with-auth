@@ -1,14 +1,6 @@
 import React from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import auth from "../../Firebase.init";
 
 const Shipment = () => {
-  const [user, loading] = useAuthState(auth);
-
-  if (loading) {
-    return <loading />;
-  }
-
   const handleShipment = (e) => {
     e.preventDefault();
     const name = e.target.name.value;

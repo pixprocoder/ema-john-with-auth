@@ -5,7 +5,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import React, { createContext, useState } from "react";
-import auth from "../Firebase.init";
+import auth from "../firebase/Firebase.init";
 
 export const userContext = createContext(null);
 

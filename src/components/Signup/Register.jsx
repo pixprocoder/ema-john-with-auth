@@ -1,21 +1,14 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  useCreateUserWithEmailAndPassword,
-  useUpdateProfile,
-} from "react-firebase-hooks/auth";
-import auth from "../../Firebase.init";
+
 import "./Signup.css";
-import Loading from "../Loading/Loading";
 import { userContext } from "../../context/AuthContext";
 
 const Register = () => {
   const { user, createUser, signInWithGoogle } = useContext(userContext);
-  // Error message state
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-  const [updateProfile, updating] = useUpdateProfile(auth);
 
   if (user) {
     navigate("/shop");
