@@ -22,6 +22,7 @@ const Register = () => {
     const password = e.target.password.value;
     const confirmPassword = e.target.confirmPassword.value;
 
+    setError("");
     if (password !== confirmPassword) {
       setError("Sorry your password did not match");
       return;
@@ -36,9 +37,8 @@ const Register = () => {
       })
       .catch((error) => {
         console.log(error);
+        setError(error.message);
       });
-
-    await updateProfile({ displayName: name });
   };
   const handleSignInWithGoogle = () => {
     signInWithGoogle()

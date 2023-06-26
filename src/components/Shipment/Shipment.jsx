@@ -21,7 +21,7 @@ const Shipment = () => {
           <form onSubmit={handleShipment}>
             <div className="mb-5">
               <label
-                for="name"
+                htmlFor="name"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
                 Your name
@@ -36,11 +36,10 @@ const Shipment = () => {
               />
             </div>
             <div className="mb-5">
-              <label for="email" className="mb-3 block font-medium ">
+              <label htmlFor="email" className="mb-3 block font-medium ">
                 Email Address
               </label>
               <input
-                value={user.email}
                 type="email"
                 name="email"
                 id="email"
@@ -51,7 +50,7 @@ const Shipment = () => {
             </div>
             <div className="mb-5">
               <label
-                for="address"
+                htmlFor="address"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
                 Address
@@ -67,7 +66,7 @@ const Shipment = () => {
             </div>
             <div className="mb-5">
               <label
-                for="phone"
+                htmlFor="phone"
                 className="mb-3 block text-base font-medium text-[#07074D]"
               >
                 Phone

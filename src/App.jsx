@@ -7,8 +7,8 @@ import Orders from "./components/Orders/Orders";
 import Shop from "./components/Shop/Shop";
 import Login from "./components/Login/Login";
 import Register from "./components/Signup/Register";
-import RequireAuth from "./components/RequireAuth/RequireAuth";
 import Shipment from "./components/Shipment/Shipment";
+import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
   return (
@@ -21,17 +21,17 @@ function App() {
         <Route
           path="/inventory"
           element={
-            <RequireAuth>
+            <PrivateRoute>
               <Inventory />
-            </RequireAuth>
+            </PrivateRoute>
           }
         ></Route>
         <Route
           path="/shipment"
           element={
-            <RequireAuth>
+            <PrivateRoute>
               <Shipment />
-            </RequireAuth>
+            </PrivateRoute>
           }
         ></Route>
         <Route path="/about" element={<About></About>}></Route>

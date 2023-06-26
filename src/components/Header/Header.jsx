@@ -1,13 +1,20 @@
 import { signOut } from "firebase/auth";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import auth from "../../firebase/Firebase.init";
 import logo from "../../images/Logo.svg";
 import "./Header.css";
 import { userContext } from "../../context/AuthContext";
 
 const Header = () => {
-  const { user } = useContext(userContext);
+  const { user, logOut } = useContext(userContext);
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        console.log("logout");
+      })
+      .catch((error) => {});
+  };
 
   return (
     <header className=" bg-gray-900 mb-4">
@@ -28,18 +35,25 @@ const Header = () => {
           <Link className="hover:text-orange-500" to="/about">
             About
           </Link>
-          {user ? (
+          <Link className="hover:text-orange-500" to="/login">
+            Login
+          </Link>
+          {user && (
             <span
-              className="px-4 py-1 border rounded-lg hover:border-orange-500 cursor-pointer"
-              onClick={() => signOut(auth)}
+              className="px-4 py-1 btn btn-primary border rounded-lg hover:border-orange-500 cursor-pointer"
+              onClick={handleLogout}
             >
               Logout
             </span>
-          ) : (
-            <Link className="hover:text-orange-500" to="./login">
-              Login
-            </Link>
           )}
+          <div>
+            {user && (
+              <span>
+                Welcome
+                {user.displayName}
+              </span>
+            )}
+          </div>
         </div>
       </nav>
     </header>
